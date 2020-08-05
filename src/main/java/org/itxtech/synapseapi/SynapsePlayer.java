@@ -35,6 +35,7 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.stream.IntStream;
 
 /**
  * Created by boybook on 16/6/24.
@@ -413,7 +414,8 @@ public class SynapsePlayer extends Player {
         if (this.inventory != null) {
             InventoryContentPacket pk = new InventoryContentPacket();
             pk.inventoryId = this.getWindowId(this.inventory);
-            pk.slots = new Item[this.inventory.getSize()];
+            Item airItem = Item.get(0);
+            pk.slots = IntStream.range(0, this.inventory.getSize()).mapToObj(i -> airItem).toArray(Item[]::new);
             this.dataPacket(pk);
         }
     }
